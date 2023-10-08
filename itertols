@@ -1,0 +1,22 @@
+import pandas as pd
+from itertools import permutations
+
+# Read the CSV file
+df = pd.read_csv('your_file.csv')
+
+# Identify duplicate values in the 'word1' column
+duplicates = df[df.duplicated('word1', keep=False)]
+
+# Iterate over the duplicate values
+for duplicate in duplicates['word1'].unique():
+    # Filter the dataframe for the current duplicate value
+    filtered_df = df[df['word1'] == duplicate]
+    
+    # Get combinations with other columns
+    combinations = list(permutations(filtered_df[['word2', 'number', 'special character']].values.tolist(), r=3))
+    
+    # Print the duplicate value and its corresponding combinations
+    print(f"Duplicate value: {duplicate}")
+    for combination in combinations:
+        print(combination)
+    print()
